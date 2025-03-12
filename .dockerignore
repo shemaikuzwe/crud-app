@@ -1,0 +1,10 @@
+node_modules
+test
+.prettierrc
+.git
+Dockerfile
+README.md
+node_modules
+dist
+*.log
+*.md
