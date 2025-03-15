@@ -1,0 +1,38 @@
+services:
+  app:
+    image: shemaelie/nest:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crud-app-server
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgresql://postgres:1234@postgres:5432/crud?schema=public
+    depends_on:
+      - postgres
+    # networks:
+    #   - appNetwork
+    restart: unless-stopped
+    
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - '555:5432' 
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: '1234'
+      POSTGRES_DB: crud
+    container_name: crud-app-postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    # networks:
+    #   - appNetwork
+    restart: unless-stopped
+    
+volumes:
+  postgres-data:
+  
+# networks:
+#   appNetwork:
+#     driver: bridge
